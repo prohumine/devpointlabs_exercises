@@ -1,0 +1,66 @@
+<html>
+<head>
+	<title>RPC with Marvin</title>
+	<script>
+   //  $ (document).ready(function() {
+	  // });
+	   
+     function play_game() 
+     {
+       var options = ['Rock', 'Paper', 'Scissors']
+       var operation_buttons = document.getElementsByName("choices");
+       var operation = ""
+
+       for(index in operation_buttons){
+     	   if (operation_buttons[index].checked){
+     		   operation = operation_buttons[index].value;
+     		   console.log(operation)
+     		   break;
+     	    };
+        };
+
+        var computer_choice = options[Math.floor(Math.random()*options.length)];
+        console.log(computer_choice)
+
+        var result_div =  document.getElementById("result_span");
+
+        if (computer_choice == operation) {
+            result_div.innerHTML = 'you tied'
+          }else if (computer_choice == 'Rock' && operation == 'Scissors') {
+            result_div.innerHTML = 'you lose';
+          }else if (computer_choice == 'Paper' && operation == 'Rock'){
+            result_div.innerHTML = 'you lose';
+          }else if (computer_choice == 'Scissors' && operation == 'Paper'){
+            result_div.innerHTML = 'you lose';
+          }else {
+           	result_div.innerHTML = 'you win';
+          }
+      }
+     // }
+
+
+</script>
+	<script src="http://code.jquery.com/jquery-2.1.1.min.js"></script>
+</head>
+<body>
+	<h1>Welcom to RPC</h1>
+	  <p><strong>Choose an option</strong></p>
+	<input type ="radio" value="Rock" name="choices" />Rock
+	<input type ="radio" value="Paper" name="choices" />Paper
+	<input type ="radio" value="Scissors" name="choices" />Scissors
+	<br>
+	<br>
+	<button name='play_game_button' id='play_game_button' onclick='play_game()'>Play Game</button>
+	<br>
+  <br>
+	Result: <span id="result_span"></span>
+
+</body>
+</html>
+
+<!-- switch case
+p beats r
+r beats s
+s beats p
+rand(3) computer choices -->
+<!-- var item = items[Math.floor(Math.random()*items.length)]; -->
