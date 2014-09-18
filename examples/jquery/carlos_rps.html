@@ -1,0 +1,108 @@
+<html>
+<head>
+<script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+<script type="text/javascript">
+var getRandomArbitrary;
+
+$(document).ready(function(){
+  var players_choice_selected = function(){
+    return $("input[type=radio]:checked");
+  };
+
+  getRandomArbitrary = function(min, max) {
+    return Math.floor(Math.random() * (max - min) + min);
+  }
+
+  var choices = ['rock', 'paper', 'scissors'];
+
+  var rules = {
+    rock:     { beats: 'scissors' },
+    paper:    { beats: 'rock'  },
+    scissors: { beats: 'paper' }
+  };
+
+  var $player_count = $("#player_count_id");
+  var $computer_count = $("#computer_count_id");
+  var $ties_count = $("#ties_count_id");
+  var $total_count = $("#total_count_id");
+
+  var compute_results = function(winner){
+    var ties_number = new Number($ties_count.html());
+    var player_number = new Number($player_count.html());
+    var computer_number = new Number($computer_count.html());
+    var total_number = new Number($total_count.html());
+    switch(winner){
+      case 'Tied':
+              $ties_count.html( ties_number += 1 );
+              break;
+      case 'Player':
+              $player_count.html( player_number += 1 );
+              break;
+      case 'Computer':
+              $computer_count.html( computer_number += 1 );
+              break;
+    }
+    $total_count.html(ties_number + player_number + computer_number);
+  };
+
+  var $results_div = $("#results_div_id")
+
+  $("#play_button_id").click(function(){
+    var $player_choice = players_choice_selected();
+    if ($player_choice.length == 0){
+      alert("You need to select something");
+      return;
+    }
+
+    var computer_choice = choices[getRandomArbitrary(0,3)];
+
+    var winner;
+
+    if (computer_choice == $player_choice.val()){
+      winner = 'Tied';
+    }
+    else{
+      winner = (rules[$player_choice.val()].beats == computer_choice) ? 'Player' : 'Computer';
+    }
+
+    $results_div.html("The computer chose: " + computer_choice + ". The winner is " + winner);
+
+    compute_results(winner);
+  });
+
+});
+</script>
+</head>
+<body>
+  <h1>
+    Carlos' Rock Paper Scissors
+  </h1>
+  <div id="players_choices">
+    <div>
+      <input type="radio" name="player_choice_radio" value="rock"/> Rock
+    </div>
+    <div>
+      <input type="radio" name="player_choice_radio" value="paper"/> Paper
+    </div>
+    <div>
+      <input type="radio" name="player_choice_radio" value="scissor"/> Scissor
+    </div>
+  </div>
+  <button id="play_button_id">Play New Game</button>
+  <div id="results_div_id">&nbsp;</div>
+  <table>
+    <tr>
+      <th>Player Wins</th>
+      <th>Computer Wins</th>
+      <th>Ties</th>
+      <th>Total Games Played</th>
+    </tr>
+    <tr>
+      <td id="player_count_id">0</td>
+      <td id="computer_count_id">0</td>
+      <td id="ties_count_id">0</td>
+      <td id="total_count_id">0</td>
+    </tr>
+  </table>
+</body>
+</html>
